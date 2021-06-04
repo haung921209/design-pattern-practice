@@ -12,18 +12,19 @@ enum oper {add, sub, mul, divi};
 
 template <typename T1,
           typename T2,
-          typename RES>
+          typename RES = common_type_t<T1, T2>>
 class BinaryOperationCalculator{
-    RES add(const T1& a, const T2& b){
+private:
+    RES addition(const T1& a, const T2& b) const {
         return a+b;
     }
-    RES substract(const T1& a, const T2& b){
+    RES substract(const T1& a, const T2& b) const {
         return a-b;
     }
-    RES multiply(const T1& a, const T2& b){
+    RES multiply(const T1& a, const T2& b) const {
         return a*b;
     }
-    RES divide(const T1& a, const T2& b){
+    RES divide(const T1& a, const T2& b) const {
         if(!b) throw out_of_range("b가 연산에 적합한 범위를 벗어났습니다");
         return a/b;
     }
@@ -35,14 +36,14 @@ public:
     
     RES eval(const T1& lhs, const T2& rhs) const {
         switch (givenOp) {
-            case add:
-              return add(lhs, rhs);
-            case sub:
-              return subtract(lhs, rhs);
-            case mul:
-              return multiply(lhs, rhs);
-            case divi:
-              return divide(lhs, rhs);
+            case oper::add:
+                return addition(lhs, rhs);
+            case oper::sub:
+                return substract(lhs, rhs);
+            case oper::mul:
+                return multiply(lhs, rhs);
+            case oper::divi:
+                return divide(lhs, rhs);
             default:
                 throw out_of_range("적합한 연산자의 범위를 넘어갔습니다");
         }
@@ -52,6 +53,8 @@ public:
 
 
 int main() {
+    BinaryOperationCalculator<long, float> binaryOperationCalculator(add);
+    cout<<binaryOperationCalculator.eval(1,2)<<endl;
  
   return 0;
 }
