@@ -1,0 +1,4 @@
+cmake_minimum_required(VERSION 2.8)
+add_definitions("-Wall -O3 -std=c++17")
+add_executable(1-ugly-code 1-ugly-code.cpp)
+add_executable(2-apply-strategy-pattern 2-apply-strategy-pattern.cpp)
