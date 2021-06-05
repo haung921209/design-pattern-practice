@@ -16,7 +16,7 @@ private:
     vector<float> temperature;
     vector<float> humidity;
     vector<float> preesure;
-    bool flag
+    bool flag;
 
 public:
     WeatherData(){
@@ -36,16 +36,18 @@ public:
         this->humidity = humidity;
         this->preesure = preesure;
         this->temperature = temperature;
+        this->flag=true;
         
     }
-    (vector<float>, vector<float>, vector<float>) update(){
-        if(this->flag==true){
-            //update and display data
-            return (temperature, humidity, preesure);
-        }
-        // nothing updated
-        
+    
+    bool isUpdated(){
+        return this->flag;
     }
+    
+    void notifyUpdateCompleted(){
+        this->flag = false;
+    }
+    
     
 };
 
@@ -64,8 +66,10 @@ public:
     }
     
     void display(){
-        if(WeatherData->update()){
+        if(weatherData->isUpdated()){
             //display data and update
+            
+            weatherData->notifyUpdateCompleted();
         }
     }
     
@@ -80,7 +84,6 @@ int main(int argc, const char * argv[]) {
     vector<float> preesureData = {12, 21, 13};
     vector<float> humidityData = {21, 42, 19};
     WeatherDataDisplay weatherDataDisplay;
-    weatherData->registerObserver(weatherDataDisplay);
     weatherData->setMonitoringData(temperatureData, preesureData, humidityData);
     
     return 0;
