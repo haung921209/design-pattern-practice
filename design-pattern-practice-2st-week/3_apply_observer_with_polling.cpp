@@ -67,8 +67,11 @@ public:
     
     void display(){
         if(weatherData->isUpdated()){
+            vector<float> savedHumidity = weatherData->getHumidity();
+            vector<float> savedTemperature = weatherData->getTemparature();
+            vector<float> savedPreesure = weatherData->getPreesure();
             //display data and update
-            
+
             weatherData->notifyUpdateCompleted();
         }
     }
@@ -85,6 +88,8 @@ int main(int argc, const char * argv[]) {
     vector<float> humidityData = {21, 42, 19};
     WeatherDataDisplay weatherDataDisplay;
     weatherData->setMonitoringData(temperatureData, preesureData, humidityData);
+    weatherDataDisplay.update(weatherData);
+    
     
     return 0;
 }
